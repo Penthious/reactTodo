@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Calculator from './components/Calculator';
+import Todo from './components/Todo';
 
 export default class App extends React.Component {
     render() {
         return (
-            <Calculator />
+            <Todo />
         )
     }
 }
