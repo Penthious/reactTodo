@@ -19,11 +19,45 @@ class TodosListItem extends Component {
         this.setState({isEditing: false});
     };
 
+    onSaveClick = (e) => {
+        e.preventDefault;
+        const oldTask = this.props.task;
+        const newTask = this.refs.editInput.value;
+        this.props.saveTask(oldTask, newTask);
+        this.setState({ isEditing: false });
+    };
+
+    renderTasksSection() {
+        console.log(this.props);
+        const { task, isCompleted } = this.props;
+        const taskStyle = {
+            color: isCompleted ? 'green' : 'red',
+            cursor: 'pointer',
+        };
+        if(this.state.isEditing){
+            return (
+                <td>
+                    <form onSubmit={this.onSaveClick}>
+                        <input type="text" defaultValue={task} ref="editInput" />
+                    </form>
+                </td>
+            )
+        }
+        return (
+            <td
+                style={taskStyle}
+                onClick={() => this.props.toggleTask(task)}
+             >
+                {task}
+            </td>
+        );
+    }
+
     renderActionSection() {
         if (this.state.isEditing) {
             return (
                 <td>
-                    <button >Save</button>
+                    <button onClick={this.onSaveClick}>Save</button>
                     <button onClick={this.onCancelClick}>Cancel</button>
                 </td>
             );
@@ -31,7 +65,7 @@ class TodosListItem extends Component {
         return (
             <td>
                 <button onClick={this.onEditClick}>Edit</button>
-                <button>Delete</button>
+                <button onClick={() => this.props.deleteTask(this.props.task)}>Delete</button>
             </td>
         );
     }
@@ -39,7 +73,7 @@ class TodosListItem extends Component {
     render() {
         return (
             <tr>
-                <td>{this.props.task}</td>
+                {this.renderTasksSection()}
                 {this.renderActionSection()}
             </tr>
         );

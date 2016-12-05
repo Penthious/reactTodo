@@ -33,11 +33,41 @@ class Todo extends Component {
         this.setState({todos: this.state.todos});
     };
 
+    toggleTask = (task) => {
+        const foundTodo = this.state.todos.find(todo => todo.task === task);
+
+        foundTodo.isCompleted = !foundTodo.isCompleted;
+        this.setState({todos: this.state.todos});
+    };
+
+    saveTask = (oldTask, newTask) => {
+        const foundTodo = this.state.todos.find(todo => todo.task === oldTask);
+
+        foundTodo.task = newTask;
+        this.setState({todos: this.state.todos});
+    };
+
+    deleteTask = (taskToDelete) => {
+        console.log(taskToDelete);
+        const foundTodo = this.state.todos.find(todo => todo.task === taskToDelete);
+        this.state.todos.splice(foundTodo, 1);
+        this.setState({todos: this.state.todos});
+
+    };
+
     render() {
         return (
             <div>
-                <CreateTodo createTask={this.createTask} />
-                <TodosList todos={this.state.todos} />
+                <CreateTodo
+                    todos={this.state.todos}
+                    createTask={this.createTask}
+                />
+                <TodosList
+                    todos={this.state.todos}
+                    toggleTask={this.toggleTask}
+                    saveTask={this.saveTask}
+                    deleteTask={this.deleteTask}
+                />
             </div>
         );
     }

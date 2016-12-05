@@ -15,7 +15,8 @@ class todosList extends Component {
             <table>
                 <TodosListHeader />
                 <tbody>
-                {this.props.todos.map((todo, index) => <TodosListItem key={index} {...todo} />)}
+                {this.props.todos.map((todo, index) => <TodosListItem
+                    key={index} {...todo} {...this.props} />)}
                 </tbody>
             </table>
         );
